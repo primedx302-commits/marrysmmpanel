@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MARRY SMM PANEL – Social media growth panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F6FB;--card:#fff;--ink:#0E1A3A;--mute:#5B6785;--line:#DDE3F0;--blue:#2D4BFF;--blue-ink:#fff;--sun:#FFC23D;--ok:#0E9F6E;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1226;--card:#131C38;--ink:#EAF0FF;--mute:#9AA7C7;--line:#243157;--blue:#6C84FF;--blue-ink:#0B1226;--ok:#34D399}}
+:root[data-theme="dark"]{--bg:#0B1226;--card:#131C38;--ink:#EAF0FF;--mute:#9AA7C7;--line:#243157;--blue:#6C84FF;--blue-ink:#0B1226;--ok:#34D399}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.logo{font-weight:800;font-size:22px;letter-spacing:-.02em}
+.logo i{font-style:normal;background:var(--sun);color:#0E1A3A;border-radius:8px;padding:0 7px;margin-right:6px}
+nav a{color:var(--ink);text-decoration:none;font-weight:500;margin-left:18px}
+nav a.btn{background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px}
+.hero{display:grid;gap:32px;grid-template-columns:1.1fr .9fr;align-items:start;padding:28px 0 56px}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.02;letter-spacing:-.035em;margin:0 0 16px;font-weight:800}
+.lead{color:var(--mute);max-width:46ch;margin:0 0 22px;font-size:18px}
+.stats{display:flex;gap:28px;flex-wrap:wrap}
+.stats b{display:block;font-size:26px;letter-spacing:-.02em}
+.stats span{color:var(--mute);font-size:14px}
+.order{background:var(--card);border:2px solid var(--ink);border-radius:20px;padding:22px;box-shadow:6px 6px 0 var(--blue)}
+.order h2{margin:0 0 14px;font-size:20px}
+label{display:block;font-weight:700;font-size:14px;margin:12px 0 5px}
+select,input{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px}
+select:focus,input:focus,button:focus-visible,a:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.hint{color:var(--mute);font-size:13px;margin-top:4px}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin:18px 0 12px;padding-top:14px;border-top:1.5px dashed var(--line)}
+.total b{font-size:32px;letter-spacing:-.03em}
+button.go{width:100%;font:inherit;font-weight:700;background:var(--blue);color:var(--blue-ink);border:0;border-radius:12px;padding:14px;cursor:pointer}
+button.go:disabled{opacity:.5;cursor:not-allowed}
+.msg{margin-top:12px;font-size:14px;min-height:20px}
+.msg.err{color:#E5484D}.msg.ok{color:var(--ok);font-weight:700}
+section{padding:40px 0}
+h2.t{font-size:clamp(26px,4vw,36px);letter-spacing:-.03em;margin:0 0 6px}
+.sub{color:var(--mute);margin:0 0 20px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{font:inherit;font-weight:500;background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:999px;padding:7px 15px;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.scroll{overflow-x:auto;background:var(--card);border:1.5px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line)}
+th{font-size:13px;color:var(--mute);font-weight:700}
+tr:last-child td{border-bottom:0}
+td button{font:inherit;font-weight:700;color:var(--blue);background:none;border:0;cursor:pointer;padding:0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:s}
+.steps div{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:20px}
+.steps div::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--sun);color:#0E1A3A;font-weight:800;margin-bottom:10px}
+.steps h3{margin:0 0 4px}.steps p{margin:0;color:var(--mute)}
+details{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:10px}
+summary{font-weight:700;cursor:pointer}
+details p{color:var(--mute);margin:8px 0 0}
+footer{border-top:1.5px solid var(--line);padding:24px 0 36px;color:var(--mute);font-size:14px}
+@media(max-width:780px){.hero{grid-template-columns:1fr}.steps{grid-template-columns:1fr}nav a:not(.btn){display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><div class="logo"><i>M</i>MARRY SMM PANEL</div><div><a href="#services">Services</a><a href="#how">How it works</a><a href="#faq">FAQ</a><a class="btn" href="#order">Sign in</a></div></nav>
+
+<header class="hero" id="order">
+<div>
+<h1>Grow your social accounts without the busywork.</h1>
+<p class="lead">Pick a service, enter your link and quantity, and see the exact price before you pay. Orders start within minutes.</p>
+<div class="stats"><div><b>5 min</b><span>typical start time</span></div><div><b>$0.50</b><span>lowest price per 1,000</span></div><div><b>24/7</b><span>support tickets</span></div></div>
+</div>
+<div class="order">
+<h2>New order</h2>
+<label for="plat">Platform</label>
+<select id="plat"></select>
+<label for="svc">Service</label>
+<select id="svc"></select>
+<div class="hint" id="info"></div>
+<label for="link">Link</label>
+<input id="link" type="url" placeholder="https://" autocomplete="off">
+<label for="qty">Quantity</label>
+<input id="qty" type="number" inputmode="numeric" value="1000">
+<div class="total"><span>Total</span><b id="total">$0.00</b></div>
+<button class="go" id="go">Place order</button>
+<div class="msg" id="msg" role="status"></div>
+</div>
+</header>
+
+<section id="services">
+<h2 class="t">Services and prices</h2>
+<p class="sub">Prices are per 1,000. Tap “Order” to fill the form above.</p>
+<div class="tabs" id="tabs"></div>
+<div class="scroll"><table><thead><tr><th>Service</th><th>Price / 1,000</th><th>Min</th><th>Max</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+</section>
+
+<section id="how">
+<h2 class="t">How it works</h2>
+<p class="sub">Three steps, no software to install.</p>
+<div class="steps"><div><h3>Add funds</h3><p>Top up your balance with the payment method you prefer.</p></div><div><h3>Place an order</h3><p>Choose a service, paste your public link, set the quantity.</p></div><div><h3>Track progress</h3><p>Watch the status update from pending to completed in your dashboard.</p></div></div>
+</section>
+
+<section id="faq">
+<h2 class="t">Questions</h2>
+<p class="sub">Quick answers before you order.</p>
+<details><summary>Do you need my password?</summary><p>Never. We only need the public link to your profile or post.</p></details>
+<details><summary>What if the count drops?</summary><p>Services marked “Refill” are topped up for free during the refill window.</p></details>
+<details><summary>Can I resell your services?</summary><p>Yes. Use the API to connect your own panel or reseller site.</p></details>
+</section>
+</div>
+<footer><div class="wrap">© 2026 MARRY SMM PANEL. Not affiliated with any social network. Replace placeholder services and prices before launch.</div></footer>
+
+<script>
+var S=[
+{p:"Instagram",n:"Followers (Real mix)",r:2.4,min:100,max:50000,x:"Refill 30 days"},
+{p:"Instagram",n:"Likes",r:0.8,min:50,max:20000,x:"Instant start"},
+{p:"Instagram",n:"Reel views",r:0.5,min:500,max:1000000,x:"Instant start"},
+{p:"TikTok",n:"Followers",r:3.1,min:100,max:30000,x:"Refill 30 days"},
+{p:"TikTok",n:"Likes",r:1.2,min:50,max:20000,x:"Instant start"},
+{p:"TikTok",n:"Video views",r:0.6,min:500,max:2000000,x:"Instant start"},
+{p:"YouTube",n:"Views",r:2.8,min:500,max:500000,x:"Starts in 1 hour"},
+{p:"YouTube",n:"Likes",r:3.5,min:50,max:10000,x:"Starts in 1 hour"},
+{p:"X (Twitter)",n:"Followers",r:4.2,min:100,max:20000,x:"Refill 30 days"},
+{p:"X (Twitter)",n:"Post likes",r:2.0,min:50,max:10000,x:"Instant start"}];
+var plats=[];S.forEach(function(s){if(plats.indexOf(s.p)<0)plats.push(s.p)});
+var $=function(i){return document.getElementById(i)},cur=plats[0],sel=null;
+function money(n){return "$"+n.toFixed(2)}
+function list(p){return S.filter(function(s){return s.p===p})}
+function fillPlat(){$("plat").innerHTML=plats.map(function(p){return "<option>"+p+"</option>"}).join("")}
+function fillSvc(){$("svc").innerHTML=list(cur).map(function(s,i){return "<option value='"+S.indexOf(s)+"'>"+s.n+" – "+money(s.r)+"/1k</option>"}).join("");pick()}
+function pick(){sel=S[+$("svc").value];$("info").textContent="Min "+sel.min.toLocaleString()+" · Max "+sel.max.toLocaleString()+" · "+sel.x;calc()}
+function calc(){var q=+$("qty").value||0,ok=q>=sel.min&&q<=sel.max;$("total").textContent=money(q/1000*sel.r);$("go").disabled=!ok;
+$("msg").className="msg"+(ok?"":" err");$("msg").textContent=ok?"":"Quantity must be between "+sel.min.toLocaleString()+" and "+sel.max.toLocaleString()+"."}
+function tabs(){$("tabs").innerHTML=plats.map(function(p){return "<button aria-pressed='"+(p===cur)+"' data-p='"+p+"'>"+p+"</button>"}).join("");
+$("rows").innerHTML=list(cur).map(function(s){return "<tr><td>"+s.n+"<div class='hint'>"+s.x+"</div></td><td>"+money(s.r)+"</td><td>"+s.min.toLocaleString()+"</td><td>"+s.max.toLocaleString()+"</td><td><button data-i='"+S.indexOf(s)+"'>Order</button></td></tr>"}).join("")}
+function setPlat(p){cur=p;$("plat").value=p;fillSvc();tabs()}
+$("plat").onchange=function(){setPlat(this.value)};
+$("svc").onchange=pick;$("qty").oninput=calc;
+$("tabs").onclick=function(e){if(e.target.dataset.p)setPlat(e.target.dataset.p)};
+$("rows").onclick=function(e){var i=e.target.dataset.i;if(i===undefined)return;$("svc").value=i;pick();$("qty").value=sel.min;calc();$("order").scrollIntoView();$("link").focus()};
+$("go").onclick=function(){var l=$("link").value.trim();
+if(!/^https?:\/\/.+\..+/.test(l)){$("msg").className="msg err";$("msg").textContent="Enter a valid link starting with https://";return}
+$("msg").className="msg ok";$("msg").textContent="Order received (demo). Connect a backend to process it."};
+fillPlat();setPlat(cur);
+</script>
+</body>
+</html>
