@@ -178,18 +178,5 @@ async function loadData(){
     $("list").innerHTML = items.length ? "" : "<p>No payments yet.</p>";
     items.forEach(d => {
       const r = document.createElement("div"); r.className = "row";
-      const l = document.createElement("span"); l.textContent = d.method + " · Rs " + d.amount;
-      const s = document.createElement("span"); s.className = "tag"; s.textContent = d.status;
-      r.append(l, s); $("list").append(r);
-    });
-  } catch (e) { say($("fundMsg"), "Could not load your data. " + e.message, "err"); }
-}
-
-onAuthStateChanged(auth, user => {
-  $("auth").classList.toggle("hide", !!user);
-  $("app").classList.toggle("hide", !user);
-  if (user) { $("who").textContent = user.email; ensureUser(user).then(loadData); }
-});
-</script>
-</body>
-</html>
+      const l = document.createElement("span"); l.textContent = d.method + " 
+  
