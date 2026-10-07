@@ -77,6 +77,27 @@ button:disabled{opacity:.6}
     </div>
 
     <div class="card">
+      <h2>New order</h2>
+      <label for="cat">Category</label>
+      <select id="cat"></select>
+      <label for="svc">Service</label>
+      <select id="svc"></select>
+      <p id="svcInfo"></p>
+      <label for="link">Link</label>
+      <input id="link" type="url" placeholder="https://">
+      <label for="qty">Quantity</label>
+      <input id="qty" type="number" inputmode="numeric">
+      <p id="cost"></p>
+      <button id="order" type="button">Place order</button>
+      <div id="orderMsg" class="msg" role="alert"></div>
+    </div>
+
+    <div class="card">
+      <h2>Your orders</h2>
+      <div id="orders"><p>No orders yet.</p></div>
+    </div>
+
+    <div class="card">
       <h2>Your payments</h2>
       <div id="list"><p>No payments yet.</p></div>
     </div>
@@ -178,5 +199,76 @@ async function loadData(){
     $("list").innerHTML = items.length ? "" : "<p>No payments yet.</p>";
     items.forEach(d => {
       const r = document.createElement("div"); r.className = "row";
-      const l = document.createElement("span"); l.textContent = d.method + " 
-  
+      const l = document.createElement("span"); l.textContent = d.method + " · Rs " + d.amount;
+      const s = document.createElement("span"); s.className = "tag"; s.textContent = d.status;
+      r.append(l, s); $("list").append(r);
+    });
+  } catch (e) { say($("fundMsg"), "Could not load your data. " + e.message, "err"); }
+}
+
+let svcs = [];
+const cur = () => svcs.find(s => String(s.id) === $("svc").value);
+function showCost(){
+  const s = cur();
+  $("svcInfo").textContent = s ? "Rs " + s.rate + " per 1000 · min " + s.min + " · max " + s.max : "";
+  const q = Number($("qty").value);
+  $("cost").textContent = s && q ? "Total: about Rs " + (Math.ceil(s.rate * q / 1000 * 100) / 100) : "";
+}
+function fillSvc(){
+  $("svc").innerHTML = "";
+  svcs.filter(s => s.category === $("cat").value).forEach(s => $("svc").add(new Option(s.name, s.id)));
+  showCost();
+}
+async function loadServices(){
+  try {
+    const r = await fetch("/.netlify/functions/services");
+    svcs = await r.json();
+    if (!Array.isArray(svcs)) throw new Error(svcs.error || "Failed");
+    $("cat").innerHTML = "";
+    [...new Set(svcs.map(s => s.category))].forEach(c => $("cat").add(new Option(c, c)));
+    fillSvc();
+  } catch (e) { say($("orderMsg"), "Could not load services. " + e.message, "err"); }
+}
+async function loadOrders(){
+  const u = auth.currentUser; if (!u) return;
+  try {
+    const res = await getDocs(query(collection(db, "orders"), where("uid", "==", u.uid)));
+    const items = res.docs.map(d => d.data()).sort((a, b) => b.createdAt - a.createdAt);
+    $("orders").innerHTML = items.length ? "" : "<p>No orders yet.</p>";
+    items.forEach(d => {
+      const r = document.createElement("div"); r.className = "row";
+      const l = document.createElement("span"); l.textContent = d.serviceName.slice(0, 40) + " · " + d.quantity;
+      const s = document.createElement("span"); s.className = "tag"; s.textContent = "Rs " + d.charge;
+      r.append(l, s); $("orders").append(r);
+    });
+  } catch (e) { say($("orderMsg"), "Could not load orders. " + e.message, "err"); }
+}
+$("cat").onchange = fillSvc; $("svc").onchange = showCost; $("qty").oninput = showCost;
+$("order").onclick = async () => {
+  const s = cur();
+  if (!s) return say($("orderMsg"), "Choose a service.", "err");
+  $("order").disabled = true; say($("orderMsg"), "Placing order...");
+  try {
+    const token = await auth.currentUser.getIdToken();
+    const r = await fetch("/.netlify/functions/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+      body: JSON.stringify({ service: s.id, link: $("link").value.trim(), quantity: $("qty").value })
+    });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error || "Order failed");
+    say($("orderMsg"), "Order placed. Rs " + d.charge + " was taken from your balance.", "ok");
+    $("link").value = ""; $("qty").value = ""; showCost();
+    loadData(); loadOrders();
+  } catch (e) { say($("orderMsg"), e.message, "err"); }
+  $("order").disabled = false;
+};
+
+onAuthStateChanged(auth, user => {
+  $("auth").classList.toggle("hide", !!user);
+  $("app").classList.toggle("hide", !user);
+  if (user) { $("who").textContent = user.email; ensureUser(user).then(() => { loadData(); loadOrders(); }); if (!svcs.length) loadServices(); }
+});
+</script>
+</body>
+</html>
